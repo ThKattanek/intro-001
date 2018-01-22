@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 
 # Wenn CMAKE_BUILD_TYPE nicht gesetzt wurde auf Release setzen
 if(NOT CMAKE_BUILD_TYPE)
@@ -18,11 +18,14 @@ if (SFML_STATIC_LIBRARIES)
 endif()
 
 # Specific compiler options
+
 if(CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -stdlib=libc++")
 endif()
+
+set (CMAKE_CXX_STANDARD 11)
 
 set(SOURCES src/main.cpp)
 
