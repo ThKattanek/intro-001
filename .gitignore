@@ -1,4 +1,5 @@
 *.directory
 *.txt.user
 build/*
+build*
 *.autosave

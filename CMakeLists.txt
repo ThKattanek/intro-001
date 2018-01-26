@@ -30,6 +30,7 @@ set (CMAKE_CXX_STANDARD 11)
 set(SOURCES src/main.cpp)
 
 if(WIN32)
+    message(STATUS "!!! WIN32 !!!")
     set(WIN_RC
                 ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}.rc
         )
@@ -46,9 +47,13 @@ if(SFML_STATIC_LIBRARIES)
 
 # SFML
 # network audio graphics window system
-find_package(SFML 2 COMPONENTS system window graphics)
+find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${PROJECT_NAME} ${SFML_DEPENDENCIES})
     target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES})
+    target_link_libraries(${PROJECT_NAME} ${SFML_DEPENDENCIES})
+endif()
+
+if(WIN32)
+    target_link_libraries(${PROJECT_NAME} -lsfml-main -lsfml-system-s -lsfml-window-s -lsfml-graphics-s png jpeg harfbuzz freetype z bz2 winmm)
 endif()

@@ -67,7 +67,11 @@ int main(int argc, char *argv[])
 
     // Font erstellen
     sf::Font font1;
-    font1.loadFromFile("./data/arial.ttf");
+    const std::string filename = "./data/arial.ttf";
+    if(!font1.loadFromFile(filename))
+    {
+        cerr << "Fehler bein laden des Fonts." << endl;
+    }
 
     // Text erstellen
     sf::Text text1("Test1",font1);
