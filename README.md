@@ -1,6 +1,6 @@
 # Intro-001
 A simply SFML demo
-###[Latest version here](https://github.com/ThKattanek/intro-001/releases)
+### [Latest version here](https://github.com/ThKattanek/intro-001/releases)
 
 ![Screenshot](screenshot.png)
 
@@ -38,4 +38,4 @@ cd build-win-x64
 [MXE-PATH]/usr/bin/x86_64-w64-mingw32.static-cmake .. -DSFML_STATIC_LIBRARIES=TRUE
 make
 ```
-###[MXE Website](http://mxe.cc)
+### [MXE Website](http://mxe.cc)
