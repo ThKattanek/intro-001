@@ -89,5 +89,5 @@ if [ $x86_64_ok ]; then
   
     # compress as 7z
     echo "Release 64bit as 7z kompressed..."
-    7z a -t7z -m0=LZMA -mmt=on -mx=9 -md=96m -mfb=256 $install_x86_64_dir/intro-001-win-32bit.7z $install_x86_64_dir/*
+    7z a -t7z -m0=LZMA -mmt=on -mx=9 -md=96m -mfb=256 $install_x86_64_dir/intro-001-win-64bit.7z $install_x86_64_dir/*
 fi
