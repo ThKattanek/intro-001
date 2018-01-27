@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <stdio.h>
 #include <math.h>
 
@@ -16,7 +17,12 @@ typedef unsigned int u_int32_t;
 
 int main(int argc, char *argv[])
 {
+    cout << "DATA_PATH: " << DATA_PATH << endl;
+
     // Variablen
+
+    char filename[1024];
+
     u_int8_t grayrasterbar[256];
 
     float sintab[1024];
@@ -67,7 +73,8 @@ int main(int argc, char *argv[])
 
     // Font erstellen
     sf::Font font1;
-    const std::string filename = "./data/arial.ttf";
+    sprintf(filename,"%s/arial.ttf",DATA_PATH);
+
     if(!font1.loadFromFile(filename))
     {
         cerr << "Fehler bein laden des Fonts." << endl;
@@ -156,18 +163,6 @@ int main(int argc, char *argv[])
 
             frequcounter5 += 2;
             frequcounter6 += 10;
-
-
-            /*
-            frequcounter1 += 3;
-            frequcounter2 += 1;
-
-            frequcounter3 += 1;
-            frequcounter4 += 2;
-
-            frequcounter5 += 3;
-            frequcounter6 += 1;
-            */
         }
 
         static int c1 = 0;

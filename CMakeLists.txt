@@ -2,6 +2,7 @@
 # Berlin, 01-27-2018
 #
 # For Static Win32 compilation must -DSFML_STATIC_LIBRARIES=TRUE
+# Installprefix set with: -DCMAKE_INSTALL_PREFIX=[INSTALL_PATH]
 #
 ################################################################
 
@@ -14,11 +15,13 @@ message(STATUS "Project Name: " ${PROJECT_NAME})
 
 #################### CONFIGURE ####################
 
+# Standard Build Type = Release
 if(NOT CMAKE_BUILD_TYPE)
         set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
         message(STATUS "CMAKE_BUILD_TYPE NOT FOUND")
 endif()
 
+# SFML_STATIC_LIBRARIES is standard FLASE
 set(SFML_STATIC_LIBRARIES FALSE CACHE BOOL "Use static SFML librares")
 
 if(WIN32)
@@ -26,6 +29,9 @@ if(WIN32)
         add_definitions(-DSFML_STATIC)
     endif()
 endif()
+
+# Data Directory
+set(DATA_DIRECTORY_NAME "data")
 
 ##################### SOURCES #####################
 
@@ -74,5 +80,30 @@ endif()
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
+################### INSTALL #######################
 
+if(WIN32)
+# Windows
 
+    # Set DATA_PATH definition
+    add_definitions("-DDATA_PATH=\"${DATA_DIRECTORY_NAME}\"")
+
+    # Executable
+    install(TARGETS ${PROJECT_NAME} DESTINATION ./)
+
+    # Files
+    install(FILES "data/arial.ttf" DESTINATION "./${DATA_DIRECTORY_NAME}")
+    install(FILES "license.txt" DESTINATION ./)
+else()
+# Linux
+
+    # Set DATA_PATH definition
+    add_definitions("-DDATA_PATH=\"${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/${DATA_DIRECTORY_NAME}\"")
+
+    # Executable
+    install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+
+    # Files (nach share)
+    install(FILES "data/arial.ttf" DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/${DATA_DIRECTORY_NAME})
+    install(FILES "license.txt" DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME})
+endif()
