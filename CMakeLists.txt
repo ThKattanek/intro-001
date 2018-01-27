@@ -1,65 +1,78 @@
-cmake_minimum_required(VERSION 3.1)
+# CMakeList.txt for Intro-001 by Thorsten Kattanek
+# Berlin, 01-27-2018
+#
+# For Static Win32 compilation must -DSFML_STATIC_LIBRARIES=TRUE
+#
+################################################################
 
-# Wenn CMAKE_BUILD_TYPE nicht gesetzt wurde auf Release setzen
+cmake_minimum_required(VERSION 2.8)
+
+##################### PROJECT #####################
+
+project("intro-001")
+message(STATUS "Project Name: " ${PROJECT_NAME})
+
+#################### CONFIGURE ####################
+
 if(NOT CMAKE_BUILD_TYPE)
-	set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
-	message(STATUS "CMAKE_BUILD_TYPE NOT FOUND")
+        set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
+        message(STATUS "CMAKE_BUILD_TYPE NOT FOUND")
 endif()
 
-set(PROJECT_NAME "intro-001")
-project(${PROJECT_NAME})
-
-# Configuration options
 set(SFML_STATIC_LIBRARIES FALSE CACHE BOOL "Use static SFML librares")
 
-# General compiler options
-if (SFML_STATIC_LIBRARIES)
-	add_definitions(-DSFML_STATIC)
+if(WIN32)
+    if(SFML_STATIC_LIBRARIES)
+        add_definitions(-DSFML_STATIC)
+    endif()
 endif()
 
-# Specific compiler options
+##################### SOURCES #####################
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -stdlib=libc++")
-endif()
+set(SOURCES
+    src/main.cpp
+)
 
-set (CMAKE_CXX_STANDARD 11)
-
-set(SOURCES src/main.cpp)
+################### RESOURCEN #####################
 
 if(WIN32)
-    message(STATUS "!!! WIN32 !!!")
-    set(WIN_RC
-                ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}.rc
-        )
+    set(WIN_RC ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}.rc)
 endif()
+
+################### LIBRARIES #####################
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 
 # SFML
 # network audio graphics window system
 find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
-
-    add_executable(${PROJECT_NAME} ${SOURCES} ${WIN_RC})
-
-    target_link_libraries(${PROJECT_NAME} ${SFML_SYSTEM_LIBRARY})
-    target_link_libraries(${PROJECT_NAME} ${SFML_SYSTEM_DEPENDENCIES})
-    target_link_libraries(${PROJECT_NAME} ${SFML_WINDOW_LIBRARY})
-    target_link_libraries(${PROJECT_NAME} ${SFML_WINDOW_DEPENDENCIES})
-    target_link_libraries(${PROJECT_NAME} ${SFML_GRAPHICS_LIBRARY})
-    target_link_libraries(${PROJECT_NAME} ${SFML_GRAPHICS_DEPENDENCIES})
-endif()
-
-if(SFML_STATIC_LIBRARIES)
-                set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS "SFML_STATIC")
+    set(LIBRARIES ${LIBRARIES} ${SFML_SYSTEM_LIBRARY})
+    set(LIBRARIES ${LIBRARIES} ${SFML_SYSTEM_DEPENDENCIES})
+    set(LIBRARIES ${LIBRARIES} ${SFML_WINDOW_LIBRARY})
+    set(LIBRARIES ${LIBRARIES} ${SFML_WINDOW_DEPENDENCIES})
+    set(LIBRARIES ${LIBRARIES} ${SFML_GRAPHICS_LIBRARY})
+    set(LIBRARIES ${LIBRARIES} ${SFML_GRAPHICS_DEPENDENCIES})
+    if(WIN32)
+        if(SFML_STATIC_LIBRARIES)
+            set(LIBRARIES ${LIBRARIES} -lsfml-system-s png jpeg harfbuzz z bz2 winmm)
         endif()
-
-if(WIN32)
-    target_link_libraries(${PROJECT_NAME} -lsfml-system-s png jpeg harfbuzz z bz2 winmm)
+    endif()
+else()
+    message(STATUS "SFML not found!")
 endif()
+
+################### EXECUTABLE ####################
+
+if(NOT WIN32)
+    add_executable(${PROJECT_NAME} ${SOURCES})
+else()
+    add_executable(${PROJECT_NAME} ${SOURCES} ${WIN_RC})
+endif()
+
+target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
+
+
+
