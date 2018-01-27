@@ -39,21 +39,27 @@ endif()
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-add_executable(${PROJECT_NAME} ${SOURCES} ${WIN_RC})
-
-if(SFML_STATIC_LIBRARIES)
-		set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS "SFML_STATIC")
-	endif()
 
 # SFML
 # network audio graphics window system
 find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES})
-    target_link_libraries(${PROJECT_NAME} ${SFML_DEPENDENCIES})
+
+    add_executable(${PROJECT_NAME} ${SOURCES} ${WIN_RC})
+
+    target_link_libraries(${PROJECT_NAME} ${SFML_SYSTEM_LIBRARY})
+    target_link_libraries(${PROJECT_NAME} ${SFML_SYSTEM_DEPENDENCIES})
+    target_link_libraries(${PROJECT_NAME} ${SFML_WINDOW_LIBRARY})
+    target_link_libraries(${PROJECT_NAME} ${SFML_WINDOW_DEPENDENCIES})
+    target_link_libraries(${PROJECT_NAME} ${SFML_GRAPHICS_LIBRARY})
+    target_link_libraries(${PROJECT_NAME} ${SFML_GRAPHICS_DEPENDENCIES})
 endif()
 
+if(SFML_STATIC_LIBRARIES)
+                set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS "SFML_STATIC")
+        endif()
+
 if(WIN32)
-    target_link_libraries(${PROJECT_NAME} -lsfml-main -lsfml-system-s -lsfml-window-s -lsfml-graphics-s png jpeg harfbuzz freetype z bz2 winmm)
+    target_link_libraries(${PROJECT_NAME} -lsfml-system-s png jpeg harfbuzz z bz2 winmm)
 endif()
