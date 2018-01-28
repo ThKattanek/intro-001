@@ -32,6 +32,7 @@ else
     declare x86_64_ok=true
 fi
 
+#### 32Bit Static
 if [ $i686_ok ]; then
     echo "Creating a i686-Static windows binary ..."
     
@@ -62,6 +63,7 @@ if [ $i686_ok ]; then
     7z a -t7z -m0=LZMA -mmt=on -mx=9 -md=96m -mfb=256 $install_i686_dir/intro-001-win-32bit.7z $install_i686_dir/*
 fi
 
+### 64Bit Static
 if [ $x86_64_ok ]; then
     echo "Creating a x86_64-Static windows binary ..."
     
