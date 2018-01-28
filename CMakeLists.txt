@@ -1,5 +1,5 @@
-# CMakeList.txt for Intro-001 by Thorsten Kattanek
-# Berlin, 01-27-2018
+# CMakeList.txt for SFML-DEMO by Thorsten Kattanek
+# Berlin, 01-28-2018
 #
 # For Static Win32 compilation must -DSFML_STATIC_LIBRARIES=TRUE
 # Installprefix set with: -DCMAKE_INSTALL_PREFIX=[INSTALL_PATH]
@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 2.8)
 
 ##################### PROJECT #####################
 
-project("intro-001")
+project("sfml-demo")
 message(STATUS "Project Name: " ${PROJECT_NAME})
 
 #################### CONFIGURE ####################
