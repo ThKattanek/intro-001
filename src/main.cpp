@@ -6,6 +6,8 @@
 using namespace std;
 
 #include <SFML/System.hpp>
+#include <SFML/Main.hpp>
+#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
 #define XW 800
@@ -15,7 +17,17 @@ typedef unsigned char u_int8_t;
 typedef unsigned short u_int16_t;
 typedef unsigned int u_int32_t;
 
-int main(int argc, char *argv[])
+
+/*
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include "windows.h"
+INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
+#else
+int main(int argc, char **argv)
+#endif
+*/
+int main(int argc, char **argv)
 {
     cout << "DATA_PATH: " << DATA_PATH << endl;
 
