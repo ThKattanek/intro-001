@@ -30,6 +30,11 @@ if(WIN32)
     endif()
 endif()
 
+if(WIN32)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s -Os -g -Wall")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s -Os -g -Wall")
+endif()
+
 # Data Directory
 set(DATA_DIRECTORY_NAME "data")
 
