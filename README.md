@@ -1,6 +1,6 @@
 # SFML-DEMO
 A simply SFML demonstration
-### [Latest version here](https://github.com/ThKattanek/intro-001/releases)
+### [Latest version here](https://github.com/ThKattanek/sfml-demo/releases)
 
 ![Screenshot](screenshot.png)
 
